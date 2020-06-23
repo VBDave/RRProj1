@@ -16,11 +16,28 @@ date: The date on which the measurement was taken in YYYY-MM-DD format
 interval: Identifier for the 5-minute interval in which measurement was taken  
 The dataset is stored in a comma-separated-value (CSV) file and there are a total of 17,568 observations in this dataset.
 
-library("data.table")
+Loading Libraries:
+```{r loadlibs, results="hide"}
+library(data.table)
 library(ggplot2)
+library(knitr)
+```
 
-fileUrl <-
-"https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+Loading Data:
+```{r loaddata}
+fileUrl <-  "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file(fileUrl,destfile=paste0(getwd(),'/repdata%2Fdata%2Factivity.zip'), method = "curl")
 unzip("repdata%2Fdata%2Factivity.zip")
+```
 
+Create Data Table:
+```{r datatable}
+ActivityData <- data.table::fread(input = "activity.csv")
+```
+
+Format Dates in Table:
+```{r dateconv}
+ActivityData$date<-as.Date(ActivityData$date)
+```
+
+Question 1: What is mean total number of steps taken per day?
