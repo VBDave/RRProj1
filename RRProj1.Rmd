@@ -41,3 +41,9 @@ ActivityData$date<-as.Date(ActivityData$date)
 ```
 
 Question 1: What is mean total number of steps taken per day?
+```{r dailysteps}
+Daily_Steps <- ActivityData[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
+Daily_Steps[, .(Mean_Steps = mean(steps, na.rm = TRUE))]
+barplot(Daily_Steps$steps,xlab="Steps",ylab="Date")
+```
+
